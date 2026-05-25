@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Com.FPTU.Prn232SE1918.MssqlServer.Entity\Com.FPTU.Prn232SE1918.Api.MssqlServer.Entity.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\Services\" />
-  </ItemGroup>
-
 </Project>

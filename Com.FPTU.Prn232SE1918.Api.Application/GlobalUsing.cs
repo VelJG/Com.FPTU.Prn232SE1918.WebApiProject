@@ -7,3 +7,4 @@ global using Microsoft.EntityFrameworkCore;
 
 global using Com.FPTU.Prn232SE1918.Api.Application.Base;
 global using Com.FPTU.Prn232SE1918.Api.Application.Interfaces.Common;
+global using Com.FPTU.Prn232SE1918.MssqlServer.Entity.Models;
