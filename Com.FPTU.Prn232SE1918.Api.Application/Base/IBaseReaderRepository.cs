@@ -9,7 +9,7 @@
     T Find(params object[] keyValues);
     // T Find(object key);
     /// <summary>
-    /// 
+    /// Lấy ra một thực thể T (an entity) theo keyId.
     /// </summary>
     /// <param name="keyValues"></param>
     /// <returns></returns>
