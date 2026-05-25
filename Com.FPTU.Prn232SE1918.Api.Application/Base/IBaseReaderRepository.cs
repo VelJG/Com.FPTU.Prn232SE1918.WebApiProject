@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Com.FPTU.Prn232SE1918.Api.Application.Base;
-
-public interface IBaseReaderRepository<T>: IBaseRepo<T> where T : class
+﻿public interface IBaseReaderRepository<T>: IBaseRepo<T> where T : class
 {
     /// <summary>
     /// Get all items of an entity by asynchronous (bat dong bo)
