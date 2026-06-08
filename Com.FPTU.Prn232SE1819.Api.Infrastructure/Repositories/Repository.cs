@@ -16,19 +16,40 @@ public sealed class Repository<T> : IRepository<T> where T : class
         => ApplicationDbContext.DbContext.Set<T>(); // trả về một DbSet<T> để thao tác với bảng tương ứng trong cơ sở dữ liệu
 
 
-    public Task DeleteAsync(T entity, bool saveChanges = true)
+    public async Task DeleteAsync(T entity, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Entities.Remove(entity); // đồng bộ
+            if (saveChanges)
+            {
+                await ApplicationDbContext.DbContext.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
-    public Task DeleteAsync(int id, bool saveChanges = true)
+    public async Task DeleteAsync(int id, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        /*1. Lay ra entity T theo id*/
+        var entity = await Entities.FindAsync(id);
+        
+        /*2. Xóa đi*/
+        await DeleteAsync(entity);
+
+        /*3. Để thực thi UoW*/
+        if (saveChanges)
+        {
+            await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
     }
 
-    public Task DeleteRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
+    public async Task DeleteRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        await DeleteRangeAsync(entities, saveChanges);
     }
 
     public T Find(params object[] keyValues)
