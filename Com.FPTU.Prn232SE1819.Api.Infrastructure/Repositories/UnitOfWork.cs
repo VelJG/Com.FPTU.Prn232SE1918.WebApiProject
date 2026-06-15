@@ -71,13 +71,33 @@ public class UnitOfWork : IUnitOfWork
         _transaction = null;
     }
 
-    public Task RollbackTransactionAsync()
+    public async Task RollbackTransactionAsync()
     {
-        throw new NotImplementedException();
+        if (_transaction is null) return;
+        //huy toan bo hanh dong da duoc apply vao db (xóa toàn bộ trên vùng nhớ tạm của EFC)
+        await _transaction.RollbackAsync();
+        //nothing vung nho dem (neu co) -- very importance
+        await _transaction.DisposeAsync(); 
+        _transaction = null;
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        => await ApplicationDbContext.DbContext.SaveChangesAsync(cancellationToken);
+
+    public void Dispose()
     {
-        throw new NotImplementedException();
+        //nothing: connection db, nothing all objects
+        if (ApplicationDbContext == null) return;
+        //close connection
+        if (ApplicationDbContext.DbContext.Database.GetDbConnection().State == ConnectionState.Open)
+            ApplicationDbContext.DbContext.Database.GetDbConnection().Close();
+
+        ApplicationDbContext.DbContext.Dispose();
+
+        ApplicationDbContext = null;
+
+        GC.SuppressFinalize(this); //nothing luon UnitOfWork (khong con dung duoc nua)
+
     }
+
 }
