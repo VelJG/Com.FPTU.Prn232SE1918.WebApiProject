@@ -31,14 +31,46 @@ public class CategoryService : DataServiceBase<Category>, ICategoryService
         }
     }
 
-    public override Task DeleteAsync(int? id)
+    public override async Task DeleteAsync(int? id)
     {
-        throw new NotImplementedException();
+        if (id == null)
+            throw new ArgumentNullException(nameof(id));
+
+        try
+        {
+            await UnitOfWork.BeginTransactionAsync();
+
+            var entity = await UnitOfWork.Repository<Category>().FindAsync(id);
+            if (entity == null)
+                throw new KeyNotFoundException($"Category with id {id} not found.");
+
+            await UnitOfWork.Repository<Category>().DeleteAsync(entity);
+            await UnitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await UnitOfWork.RollbackTransactionAsync();
+            throw;
+        }
     }
 
-    public override Task DeleteAsync(Category entity)
+    public override async Task DeleteAsync(Category entity)
     {
-        throw new NotImplementedException();
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+
+        try
+        {
+            await UnitOfWork.BeginTransactionAsync();
+
+            await UnitOfWork.Repository<Category>().DeleteAsync(entity);
+            await UnitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await UnitOfWork.RollbackTransactionAsync();
+            throw;
+        }
     }
 
     public override async Task<IList<Category>> GetAllAsync()
@@ -56,8 +88,22 @@ public class CategoryService : DataServiceBase<Category>, ICategoryService
       => await UnitOfWork.Repository<Category>()
                  .FindAsync(id);
 
-    public override Task UpdateAsync(Category entity)
+    public override async Task UpdateAsync(Category entity)
     {
-        throw new NotImplementedException();
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+
+        try
+        {
+            await UnitOfWork.BeginTransactionAsync();
+
+            await UnitOfWork.Repository<Category>().UpdateAsync(entity);
+            await UnitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await UnitOfWork.RollbackTransactionAsync();
+            throw;
+        }
     }
 }
