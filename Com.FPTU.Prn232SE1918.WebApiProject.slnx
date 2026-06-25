@@ -4,4 +4,5 @@
   <Project Path="Com.FPTU.Prn232SE1918.Api.Application/Com.FPTU.Prn232SE1918.Api.Application.csproj" Id="4706cad2-6bb4-4081-ad15-f00f23f7fd39" />
   <Project Path="Com.FPTU.Prn232SE1918.MssqlServer.Entity/Com.FPTU.Prn232SE1918.Api.MssqlServer.Entity.csproj" />
   <Project Path="Com.FPTU.Prn232SE1918.WebApi/Com.FPTU.Prn232SE1918.WebApi.csproj" />
+  <Project Path="Com.FPTU.Prn232SE1919.Services/Com.FPTU.Prn232SE1919.Services.csproj" Id="ebd6d94f-0355-4bbb-b8a7-087ff605e9e7" />
 </Solution>

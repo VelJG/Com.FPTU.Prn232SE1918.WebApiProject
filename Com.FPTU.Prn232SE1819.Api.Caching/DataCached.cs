@@ -24,8 +24,6 @@ public class DataCached : IDataCached
     }
 
 
-
-
     public void Clear()
     {
         throw new NotImplementedException();
