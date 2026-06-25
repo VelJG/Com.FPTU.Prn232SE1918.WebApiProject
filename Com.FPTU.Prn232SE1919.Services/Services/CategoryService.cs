@@ -46,15 +46,15 @@ public class CategoryService : DataServiceBase<Category>, ICategoryService
             .Entities
             .ToListAsync<Category>();
 
-    public override Task<IEnumerable<Category>> GetAllAsync(Expression<Func<Category, bool>> predicate)
-    {
-        throw new NotImplementedException();
-    }
+    public override async Task<IEnumerable<Category>> GetAllAsync(Expression<Func<Category, bool>> predicate)
+     => await UnitOfWork.Repository<Category>()
+            .Entities
+            .Where(predicate)
+            .ToListAsync();
 
-    public override Task<Category> GetOneAsync(int? id)
-    {
-        throw new NotImplementedException();
-    }
+    public override async Task<Category> GetOneAsync(int? id)
+      => await UnitOfWork.Repository<Category>()
+                 .FindAsync(id);
 
     public override Task UpdateAsync(Category entity)
     {
